@@ -48,7 +48,7 @@ public class CarService {
     public Car findById(Long id) {
         /**
          *  Find the car by ID from the `repository` if it exists.
-         *   TODO:If it does not exist, throw a CarNotFoundException
+         *   If it does not exist, throw a CarNotFoundException
          *   Remove the below code as part of your implementation.
          */
 
