@@ -31,6 +31,7 @@ public class VehiclesApiApplication {
      */
     @Bean
     CommandLineRunner initDatabase(ManufacturerRepository repository) {
+        System.out.println("Running cmdlinerunner");
         return args -> {
             repository.save(new Manufacturer(100, "Audi"));
             repository.save(new Manufacturer(101, "Chevrolet"));

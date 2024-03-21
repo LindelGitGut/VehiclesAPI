@@ -22,14 +22,14 @@ public class CarService {
     private final MapsClient mapsClient;
     private final PriceClient priceClient;
 
-    public CarService(CarRepository repository, MapsClient mapsClient, PriceClient priceClient, MapsClient mapsClient1, PriceClient priceClient1) {
+    public CarService(CarRepository repository,  MapsClient mapsClient, PriceClient priceClient) {
         /**
          *  Add the Maps and Pricing Web Clients you create
          *   in `VehiclesApiApplication` as arguments and set them here.
          */
         this.repository = repository;
-        this.mapsClient = mapsClient1;
-        this.priceClient = priceClient1;
+        this.mapsClient = mapsClient;
+        this.priceClient = priceClient;
     }
 
     /**

@@ -12,11 +12,12 @@ import java.math.BigDecimal;
 
 @Entity
 public class Price {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+;
     private String currency;
     private BigDecimal price;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long vehicleId;
 
     public Price() {
@@ -28,13 +29,8 @@ public class Price {
         this.vehicleId = vehicleId;
     }
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+
 
     public String getCurrency() {
         return currency;
