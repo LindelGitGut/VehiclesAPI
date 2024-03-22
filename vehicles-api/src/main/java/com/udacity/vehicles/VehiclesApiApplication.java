@@ -2,12 +2,14 @@ package com.udacity.vehicles;
 
 import com.udacity.vehicles.domain.manufacturer.Manufacturer;
 import com.udacity.vehicles.domain.manufacturer.ManufacturerRepository;
+import com.udacity.vehicles.service.EndpointDiscoveryService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
@@ -45,6 +47,12 @@ public class VehiclesApiApplication {
         };
     }
 
+    //added LoadBalanced Webclient Builder to resolve Service Names for requests via Eureka
+    @LoadBalanced
+    @Bean
+    public WebClient.Builder loadBalancedWebClientBuilder() {
+        return WebClient.builder();
+    }
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();
@@ -60,14 +68,24 @@ public class VehiclesApiApplication {
         return WebClient.create(endpoint);
     }
 
-    /**
+
+
+
+    // added Discovery Client so that Constants from application.properties are not needed
+
+/*    *//**
      * Web Client for the pricing API
      * @param endpoint where to communicate for the pricing API
      * @return created pricing endpoint
-     */
+     *//*
     @Bean(name="pricing")
-    public WebClient webClientPricing(@Value("${pricing.endpoint}") String endpoint) {
+    public WebClient webClientPricing(EndpointDiscoveryService endpointDiscoveryService) {
+
+        //retriving Endpoint form Discovery Client:
+
+        String endpoint = endpointDiscoveryService.priceServiceUrl();
+
         return WebClient.create(endpoint);
-    }
+    }*/
 
 }

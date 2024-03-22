@@ -1,5 +1,6 @@
 package com.udacity.vehicles.client.prices;
 
+import com.udacity.vehicles.service.EndpointDiscoveryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -13,10 +14,11 @@ public class PriceClient {
 
     private static final Logger log = LoggerFactory.getLogger(PriceClient.class);
 
-    private final WebClient client;
 
-    public PriceClient(WebClient pricing) {
-        this.client = pricing;
+    private final EndpointDiscoveryService endpointDiscoveryService;
+
+    public PriceClient(EndpointDiscoveryService endpointDiscoveryService) {
+        this.endpointDiscoveryService = endpointDiscoveryService;
     }
 
     // In a real-world application we'll want to add some resilience
@@ -31,6 +33,9 @@ public class PriceClient {
      *   service is down.
      */
     public String getPrice(Long vehicleId) {
+
+        WebClient client = this.endpointDiscoveryService.getPriceServiceWebsClient();
+
         try {
             Price price = client
                     .get()
