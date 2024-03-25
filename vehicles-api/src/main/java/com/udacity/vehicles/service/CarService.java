@@ -40,12 +40,6 @@ public class CarService {
 
         List<Car> allCars = repository.findAll();
 
-        for (Car currentCar: allCars
-             ) {
-            currentCar.setPrice(priceClient.getPrice(currentCar.getId()));
-            currentCar.setLocation(mapsClient.getAddress(currentCar.getLocation()));
-
-        }
 
         return allCars;
     }
@@ -78,6 +72,8 @@ public class CarService {
          *   the pricing service each time to get the price.
          */
 
+        /* commented out for Bonus challenge so that only on creation of car Location and price will be applied
+
         car.setPrice(priceClient.getPrice(car.getId()));
 
 
@@ -91,7 +87,7 @@ public class CarService {
          */
 
 
-        car.setLocation(mapsClient.getAddress(car.getLocation()));
+   /*     car.setLocation(mapsClient.getAddress(car.getLocation()));*/
 
         return car;
     }
