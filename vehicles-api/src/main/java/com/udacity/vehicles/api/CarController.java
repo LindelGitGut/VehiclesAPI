@@ -121,22 +121,30 @@ class CarController {
 
             if (oldlat != car.getLocation().getLat() || oldlon != car.getLocation().getLon()){
                 //if changes detected then generate new value
-                //TODO Add Save Func with generation Address
+                //Add Save Func with generation Address
+                car.setId(id);
+                Car newCar = carService.save(car);
+                Resource<Car> resource = assembler.toResource(newCar);
+                return ResponseEntity.ok(resource);
             }
 
             //Else if no changes are detected = no new generated address => call function save without MapsClient
-            else {
-                //TODO Add Save Func without generation of Address
-            }
+
+                // Add Save Func without generation of Address
+                car.setId(id);
+                Car newCar = carService.saveWithNoLocationGen(car);
+                Resource<Car> resource = assembler.toResource(newCar);
+                return ResponseEntity.ok(resource);
+
+
 
         }
-
-
-
+        // fallback
         car.setId(id);
         Car newCar = carService.save(car);
         Resource<Car> resource = assembler.toResource(newCar);
         return ResponseEntity.ok(resource);
+
     }
 
     /**
