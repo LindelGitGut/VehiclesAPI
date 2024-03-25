@@ -120,6 +120,25 @@ public class CarService {
         return repository.save(car);
     }
 
+    public Car save(Car car, Double lan) {
+        if (car.getId() != null) {
+            return repository.findById(car.getId())
+                    .map(carToBeUpdated -> {
+                        carToBeUpdated.setDetails(car.getDetails());
+                        carToBeUpdated.setLocation(car.getLocation());
+                        return repository.save(carToBeUpdated);
+                    }).orElseThrow(CarNotFoundException::new);
+        }
+        //Obtain ID for Car, save
+        Car newCar = repository.save(car);
+
+        //want to show Pricae And Location after Saving Car so Price and Maps Service will be used
+        car.setLocation(this.mapsClient.getAddress(car.getLocation()));
+        car.setPrice(this.priceClient.getPrice(newCar.getId()));
+
+        return repository.save(car);
+    }
+
     /**
      * Deletes a given car by ID
      * @param id the ID number of the car to delete
