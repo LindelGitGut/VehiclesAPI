@@ -110,6 +110,12 @@ public class CarService {
                         return repository.save(carToBeUpdated);
                     }).orElseThrow(CarNotFoundException::new);
         }
+        //Obtain ID for Car, save
+        Car newCar = repository.save(car);
+
+        //want to show Pricae And Location after Saving Car so Price and Maps Service will be used
+        car.setLocation(this.mapsClient.getAddress(car.getLocation()));
+        car.setPrice(this.priceClient.getPrice(newCar.getId()));
 
         return repository.save(car);
     }
