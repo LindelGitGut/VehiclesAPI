@@ -34,7 +34,7 @@ public class PriceClient {
      */
     public String getPrice(Long vehicleId) {
 
-        WebClient client = this.endpointDiscoveryService.getPriceServiceWebsClient();
+        WebClient client = this.endpointDiscoveryService.getPriceServiceWebClient();
 
         try {
             Price price = client

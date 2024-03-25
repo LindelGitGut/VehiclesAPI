@@ -2,6 +2,8 @@ package com.udacity.vehicles.client.maps;
 
 import com.udacity.vehicles.domain.Location;
 import java.util.Objects;
+
+import com.udacity.vehicles.service.EndpointDiscoveryService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,12 +18,17 @@ public class MapsClient {
 
     private static final Logger log = LoggerFactory.getLogger(MapsClient.class);
 
-    private final WebClient client;
+
+/*    private final WebClient client;*/
     private final ModelMapper mapper;
 
-    public MapsClient(WebClient maps,
-            ModelMapper mapper) {
-        this.client = maps;
+    private EndpointDiscoveryService endpointDiscoveryService;
+
+    public MapsClient(/*WebClient maps,*/
+            ModelMapper mapper,
+            EndpointDiscoveryService endpointDiscoveryService) {
+        /*this.client = maps;*/
+        this.endpointDiscoveryService = endpointDiscoveryService;
         this.mapper = mapper;
     }
 
@@ -32,8 +39,11 @@ public class MapsClient {
      *   or an exception message noting the Maps service is down
      */
     public Location getAddress(Location location) {
+
+        WebClient webClient = endpointDiscoveryService.getBoogleMapsWebClient();
+
         try {
-            Address address = client
+            Address address = webClient
                     .get()
                     .uri(uriBuilder -> uriBuilder
                             .path("/maps/")

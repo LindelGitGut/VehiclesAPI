@@ -63,10 +63,12 @@ public class VehiclesApiApplication {
      * @param endpoint where to communicate for the maps API
      * @return created maps endpoint
      */
-    @Bean(name="maps")
+
+    //added DiscoverClient Service so constant values of application properties is not needed anymore, see EndpointDiscoveryService
+/*    @Bean(name="maps")
     public WebClient webClientMaps(@Value("${maps.endpoint}") String endpoint) {
         return WebClient.create(endpoint);
-    }
+    }*/
 
 
 
