@@ -1,7 +1,6 @@
 package com.udacity.vehicles.service;
 
 import com.udacity.vehicles.client.maps.MapsClient;
-import com.udacity.vehicles.client.prices.Price;
 import com.udacity.vehicles.client.prices.PriceClient;
 import com.udacity.vehicles.domain.car.Car;
 import com.udacity.vehicles.domain.car.CarRepository;
@@ -40,6 +39,12 @@ public class CarService {
 
         List<Car> allCars = repository.findAll();
 
+        for (Car currentCar: allCars
+        ) {
+            currentCar.setPrice(priceClient.getPrice(currentCar.getId()));
+            currentCar.setLocation(mapsClient.getAddress(currentCar.getLocation()));
+        }
+
 
         return allCars;
     }
@@ -72,7 +77,6 @@ public class CarService {
          *   the pricing service each time to get the price.
          */
 
-        /* commented out for Bonus challenge so that only on creation of car Location and price will be applied
 
         car.setPrice(priceClient.getPrice(car.getId()));
 
@@ -87,7 +91,7 @@ public class CarService {
          */
 
 
-   /*     car.setLocation(mapsClient.getAddress(car.getLocation()));*/
+        car.setLocation(mapsClient.getAddress(car.getLocation()));
 
         return car;
     }
@@ -103,6 +107,10 @@ public class CarService {
                     .map(carToBeUpdated -> {
                         carToBeUpdated.setDetails(car.getDetails());
                         carToBeUpdated.setLocation(car.getLocation());
+
+                        // Added Condition Update
+                        carToBeUpdated.setCondition(car.getCondition());
+
                         return repository.save(carToBeUpdated);
                     }).orElseThrow(CarNotFoundException::new);
         }

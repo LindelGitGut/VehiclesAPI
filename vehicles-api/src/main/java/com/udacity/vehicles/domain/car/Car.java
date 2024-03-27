@@ -1,5 +1,6 @@
 package com.udacity.vehicles.domain.car;
 
+
 import com.udacity.vehicles.domain.Condition;
 import com.udacity.vehicles.domain.Location;
 import java.time.LocalDateTime;
@@ -13,6 +14,9 @@ import javax.persistence.Id;
 import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -22,10 +26,13 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
  */
 @Entity
 @EntityListeners(AuditingEntityListener.class)
+@Setter
+@Getter
 public class Car {
 
     @Id
     @GeneratedValue
+
     private Long id;
 
     @CreatedDate
@@ -49,7 +56,7 @@ public class Car {
     @Transient
     private String price;
 
-    public Long getId() {
+  /*  public Long getId() {
         return id;
     }
 
@@ -103,5 +110,5 @@ public class Car {
 
     public void setPrice(String price) {
         this.price = price;
-    }
+    }*/
 }
