@@ -15,10 +15,10 @@ public class PriceClient {
     private static final Logger log = LoggerFactory.getLogger(PriceClient.class);
 
 
-    private final EndpointDiscoveryService endpointDiscoveryService;
+    private final WebClient client;
 
-    public PriceClient(EndpointDiscoveryService endpointDiscoveryService) {
-        this.endpointDiscoveryService = endpointDiscoveryService;
+    public PriceClient(WebClient pricing) {
+        this.client = pricing;
     }
 
     // In a real-world application we'll want to add some resilience
@@ -34,7 +34,7 @@ public class PriceClient {
      */
     public String getPrice(Long vehicleId) {
 
-        WebClient client = this.endpointDiscoveryService.getPriceServiceWebClient();
+
 
         try {
             Price price = client

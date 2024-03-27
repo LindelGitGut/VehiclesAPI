@@ -131,6 +131,8 @@ public class CarService {
                         carToBeUpdated.setDetails(car.getDetails());
                         //not needed, get no new location
                         /*carToBeUpdated.setLocation(car.getLocation());*/
+                        // Added Condition Update
+                        carToBeUpdated.setCondition(car.getCondition());
                         return repository.save(carToBeUpdated);
                     }).orElseThrow(CarNotFoundException::new);
         }

@@ -19,16 +19,16 @@ public class MapsClient {
     private static final Logger log = LoggerFactory.getLogger(MapsClient.class);
 
 
-/*    private final WebClient client;*/
+    private final WebClient client;
     private final ModelMapper mapper;
 
-    private EndpointDiscoveryService endpointDiscoveryService;
+/*    private EndpointDiscoveryService endpointDiscoveryService;*/
 
-    public MapsClient(/*WebClient maps,*/
+    public MapsClient(WebClient maps,
             ModelMapper mapper,
             EndpointDiscoveryService endpointDiscoveryService) {
-        /*this.client = maps;*/
-        this.endpointDiscoveryService = endpointDiscoveryService;
+        this.client = maps;
+ /*       this.endpointDiscoveryService = endpointDiscoveryService;*/
         this.mapper = mapper;
     }
 
@@ -40,10 +40,10 @@ public class MapsClient {
      */
     public Location getAddress(Location location) {
 
-        WebClient webClient = endpointDiscoveryService.getBoogleMapsWebClient();
+
 
         try {
-            Address address = webClient
+            Address address = client
                     .get()
                     .uri(uriBuilder -> uriBuilder
                             .path("/maps/")

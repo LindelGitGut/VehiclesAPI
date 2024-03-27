@@ -64,6 +64,20 @@ public class VehiclesApiApplication {
      * @return created maps endpoint
      */
 
+
+
+    //NEW ENDPOINT VIA ZULU!,
+
+    @Bean(name="pricing")
+    public WebClient webClientPricing(@Value("${zuul.endpoint}/price-service") String endpoint) {
+        return WebClient.create(endpoint);
+    }
+
+    @Bean(name="maps")
+    public WebClient webClientMaps(@Value("${zuul.endpoint}/boogle-maps") String endpoint) {
+        return WebClient.create(endpoint);
+    }
+
     //added DiscoverClient Service so constant values of application properties is not needed anymore, see EndpointDiscoveryService
 /*    @Bean(name="maps")
     public WebClient webClientMaps(@Value("${maps.endpoint}") String endpoint) {
