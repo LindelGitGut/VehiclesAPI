@@ -4,6 +4,7 @@ import com.udacity.pricing.domain.price.Price;
 import com.udacity.pricing.service.PriceException;
 import com.udacity.pricing.service.PricingService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,7 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
  * Implements a REST-based controller for the pricing service.
  */
 @RestController
-@RequestMapping("/services/price")
+@RequestMapping(value = "/services/price", produces = {MediaType.APPLICATION_JSON_VALUE})
 public class PricingController {
 
     /**
