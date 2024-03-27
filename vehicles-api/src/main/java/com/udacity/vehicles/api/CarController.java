@@ -5,6 +5,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 import com.udacity.vehicles.domain.car.Car;
+import com.udacity.vehicles.service.CarNotFoundException;
 import com.udacity.vehicles.service.CarService;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -103,12 +104,49 @@ class CarController {
          *  Use the `assembler` on that updated car and return as part of the response.
          *   Update the first line as part of the above implementing.
          */
+        Car oldCar = null;
+
+        //what hapens when Car lat,lon is updated?
+        try {
+             oldCar = carService.findById(id);
+        }
+        catch (CarNotFoundException e){
+            System.out.println("No Car with given id found continue with old code...");
+        }
+
+        if (oldCar != null){
+            System.out.println("Checking if lat or lon has changed...");
+            Double oldlat = oldCar.getLocation().getLat();
+            Double oldlon = oldCar.getLocation().getLon();
+
+            //check values from db and input
+
+            if (oldlat != car.getLocation().getLat() || oldlon != car.getLocation().getLon()){
+                //if changes detected then generate new value
+                //Add Save Func with generation Address
+                car.setId(id);
+                Car newCar = carService.save(car);
+                Resource<Car> resource = assembler.toResource(newCar);
+                return ResponseEntity.ok(resource);
+            }
+
+            //Else if no changes are detected = no new generated address => call function save without MapsClient
+
+                // Add Save Func without generation of Address
+                car.setId(id);
+                Car newCar = carService.saveWithNoLocationGen(car);
+                Resource<Car> resource = assembler.toResource(newCar);
+                return ResponseEntity.ok(resource);
 
 
+
+        }
+        // fallback
         car.setId(id);
         Car newCar = carService.save(car);
         Resource<Car> resource = assembler.toResource(newCar);
         return ResponseEntity.ok(resource);
+
     }
 
     /**

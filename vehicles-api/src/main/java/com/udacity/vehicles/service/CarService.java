@@ -40,12 +40,6 @@ public class CarService {
 
         List<Car> allCars = repository.findAll();
 
-        for (Car currentCar: allCars
-             ) {
-            currentCar.setPrice(priceClient.getPrice(currentCar.getId()));
-            currentCar.setLocation(mapsClient.getAddress(currentCar.getLocation()));
-
-        }
 
         return allCars;
     }
@@ -78,6 +72,8 @@ public class CarService {
          *   the pricing service each time to get the price.
          */
 
+        /* commented out for Bonus challenge so that only on creation of car Location and price will be applied
+
         car.setPrice(priceClient.getPrice(car.getId()));
 
 
@@ -91,7 +87,7 @@ public class CarService {
          */
 
 
-        car.setLocation(mapsClient.getAddress(car.getLocation()));
+   /*     car.setLocation(mapsClient.getAddress(car.getLocation()));*/
 
         return car;
     }
@@ -107,6 +103,26 @@ public class CarService {
                     .map(carToBeUpdated -> {
                         carToBeUpdated.setDetails(car.getDetails());
                         carToBeUpdated.setLocation(car.getLocation());
+                        return repository.save(carToBeUpdated);
+                    }).orElseThrow(CarNotFoundException::new);
+        }
+        //Obtain ID for Car, save
+        Car newCar = repository.save(car);
+
+        //want to show Price and Location after Saving Car so Price and Maps Service will be used
+        newCar.setLocation(this.mapsClient.getAddress(car.getLocation()));
+        newCar.setPrice(this.priceClient.getPrice(newCar.getId()));
+
+        return repository.save(newCar);
+    }
+
+    public Car saveWithNoLocationGen(Car car) {
+        if (car.getId() != null) {
+            return repository.findById(car.getId())
+                    .map(carToBeUpdated -> {
+                        carToBeUpdated.setDetails(car.getDetails());
+                        //not needed, get no new location
+                        /*carToBeUpdated.setLocation(car.getLocation());*/
                         return repository.save(carToBeUpdated);
                     }).orElseThrow(CarNotFoundException::new);
         }

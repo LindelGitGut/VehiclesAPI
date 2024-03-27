@@ -14,7 +14,7 @@ class MockAddressRepository {
      * Gets a random address from the list.
      * @return A new, random address split into street, city, state and zip
      */
-    static Address getRandom() {
+    static Address getRandom(Double lat, Double lon) {
 
         Random generator = new Random();
         int randomIndex = generator.nextInt(ADDRESSES.length);

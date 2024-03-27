@@ -12,6 +12,6 @@ public class MapsController {
     @GetMapping
     public Address get(@RequestParam Double lat, @RequestParam Double lon) {
 
-        return MockAddressRepository.getRandom();
+        return MockAddressRepository.getRandom(lat, lon);
     }
 }
